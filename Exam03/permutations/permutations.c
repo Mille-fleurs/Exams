@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 22:22:44 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/01/31 14:43:19 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/01/31 15:09:26 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	permutations_r(char *str, int start, int end)
 	{
 		ft_swap(&str[i], &str[start]);
 		permutations_r(str, start + 1, end);
+		ft_swap(&str[i], &str[start]);
 		i++;
 	}
 }
