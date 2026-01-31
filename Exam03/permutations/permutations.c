@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 22:22:44 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/01/29 23:18:46 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/01/31 14:43:19 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,44 +63,64 @@ void	ft_putstr(char *str)
 	write(1, "\n", 1);
 }
 
-// void	init_str(char *str)
-// {
-// 	int		i = 0;
-// 	int		j;
+void	sort_str(char *str, int len)
+{
+	int	i;
+	int	j;
 
-// 	while (str[i])
-// 	{
-// 		j = 0;
-// 		while (str[j])
-// 		{
+	i = 0;
+	while (i < len - 1)
+	{
+		j = i + 1;
+		while (j < len)
+		{
+			if (str[i] > str[j])
+				ft_swap(&str[i], &str[j]);
+			j++;
+		}
+		i++;
+	}
+}
 
-// 		}
-// 	}
-// }
+void	permutations_r(char *str, int start, int end)
+{
+	int	i;
 
-// void	sort_str_r(char *str, int len)
-// {
-// 	int	i;
-
-// 	if (i = len)
-// 	{
-// 		ft_putstr(str);
-// 		return ;
-// 	}
-// 	i = 0;
-// 	while (i < len)
-// 	{
-// 		sort_str_r()
-// 	}
-// }
+	if (start == end)
+	{
+		ft_putstr(str);
+		return ;
+	}
+	i = start;
+	while (i < end)
+	{
+		ft_swap(&str[i], &str[start]);
+		permutations_r(str, start + 1, end);
+		i++;
+	}
+}
 
 int	main(int ac, char **av)
 {
-	if (ac == 1)
+	int		i;
+	int		len;
+	char	*dup;
+
+	if (ac == 1 | ac > 2)
 		return (1);
-	if (ac < 2)
+	len = ft_strlen(av[1]);
+	dup = malloc(len + 1);
+	if (!dup)
+		return (1);
+	i = 0;
+	while (av[1][i])
 	{
-		ft_putstr(av[1]);
-		return (0);
+		dup[i] = av[1][i];
+		i++;
 	}
+	dup[i] = '\0';
+	sort_str(dup, len);
+	permutations_r(dup, 0, len);
+	free(dup);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 22:22:47 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/01/29 22:27:58 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/01/31 14:38:55 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 # define PERMUTATIONS_H
 
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
+
+int		ft_strlen(char *str);
+void	ft_swap(char *a, char *b);
+void	ft_putstr(char *str);
+void	sort_str(char *str, int len);
+void	permutations_r(char *str, int start, int end);
 
 #endif
