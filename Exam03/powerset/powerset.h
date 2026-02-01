@@ -6,6 +6,13 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 15:14:39 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/01/31 15:24:07 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/01 16:49:54 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef POWERSET_H
+# define POWERSET_H
+
+# include <stdio.h>
+# include <stdlib.h>
+#endif
