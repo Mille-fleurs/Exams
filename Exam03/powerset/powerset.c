@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 15:14:36 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/01 18:37:33 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/01 18:58:33 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,13 @@ void	print_subset(int *tab, int len)
 void	find_subset(int target, int *tab, int *res, int sum, int start, int end,
 		int curr)
 {
-	int	i;
-
 	if (start == end)
-	{
-		if (sum == target)
-			print_subset(res, end + 1);
 		return ;
-	}
-	i = start;
-	while (i < end)
-	{
-		if (sum + tab[start] <= target)
-		{
-			sum += tab[start];
-			res[curr++] = tab[start];
-		}
-		find_subset(target, tab, res, sum, start + 1, end, curr);
-		i++;
-	}
+	sum += tab[start];
+	res[curr++] = tab[start];
+	if (sum == target)
+		print_subset(res, end + 1);
+	find_subset(target, tab, res, sum, start + 1, end, curr);
 }
 
 int	main(int ac, char **av)
