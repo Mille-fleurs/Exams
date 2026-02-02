@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 15:25:12 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/02 21:11:56 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/02 21:41:04 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	get_solutions(char *str, char *res, int start, int end, int needed_l,
 {
 	if (start == end)
 	{
-		print_str(res, end);
+		if (!needed_l && !needed_r && !balanced)
+			print_str(res, end);
 		return ;
 	}
 	if (str[start] == '(')
@@ -121,7 +122,7 @@ int	main(int ac, char **av)
 	int len;
 	int needed_l;
 	int needed_r;
-	char *res;
+	char buff[MAX_LEN];
 
 	needed_l = 0;
 	needed_r = 0;
@@ -133,16 +134,13 @@ int	main(int ac, char **av)
 			write(1, &av[1][0], 1);
 			return (0);
 		}
-		res = malloc(len);
-		if (!res)
-			return (1);
 		if (is_balanced(av[1], len))
 		{
 			print_str(av[1], len);
 			return (0);
 		}
 		count_needed(av[1], &needed_l, &needed_r);
-		get_solutions(av[1], res, 0, len, needed_l, needed_r, 0);
+		get_solutions(av[1], buff, 0, len, needed_l, needed_r, 0);
 		// printf("%d\n", is_balanced(av[1], len));
 		// printf("left:%d, right:%d\n", needed_l, needed_r);
 		return (0);
