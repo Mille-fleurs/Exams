@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   powerset.h                                         :+:      :+:    :+:   */
+/*   n_queens.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/31 15:14:39 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/02 13:28:56 by chitoupa         ###   ########.fr       */
+/*   Created: 2026/02/02 14:16:02 by chitoupa          #+#    #+#             */
+/*   Updated: 2026/02/02 14:18:23 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef POWERSET_H
-# define POWERSET_H
+#ifndef N_QUEENS_H
+# define N_QUEENS_H
 
-# include <stdio.h>
 # include <stdlib.h>
-
-int		check_duplicate(int *str, int len);
-void	print_subset(int *tab, int len);
-void	find_subset(int target, int *tab, int *res, int sum, int start, int end,
-			int curr);
+# include <unistd.h>
 
 #endif

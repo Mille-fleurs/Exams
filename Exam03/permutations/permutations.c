@@ -6,35 +6,9 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 22:22:44 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/01 16:49:33 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/02 19:47:45 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// Assignment name : permutations
-
-// Expected files : *.c *.h
-// Allowed functions : puts, malloc, calloc, realloc, free, write
-// ---------------------------------------------------------------
-
-// Write a program that will print all the permutations of a string given as argument.
-
-// The solutions must be given in alphabetical order.
-
-// We will not try your program with strings containing duplicates (eg: 'abccd')
-
-// For example this should work:
-// $> ./permutations a | cat -e
-// a$
-// $> ./permutations ab | cat -e
-// ab$
-// ba$
-// $> ./permutations abc | cat -e
-// abc$
-// acb$
-// bac$
-// bca$
-// cab$
-// cba$
 
 #include "permutations.h"
 
