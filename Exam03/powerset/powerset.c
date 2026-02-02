@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 15:14:36 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/02 11:43:59 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/02 12:08:45 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ void	print_subset(int *tab, int len)
 		if (i < len - 1)
 			printf("%d ", tab[i]);
 		else
-			printf("%d\n", tab[i]);
+			printf("%d", tab[i]);
 		i++;
 	}
+	printf("\n");
 }
 
 void	find_subset(int target, int *tab, int *res, int sum, int start, int end,
@@ -70,7 +71,7 @@ int	main(int ac, char **av)
 	int *res;
 	int len;
 
-	if (ac < 3)
+	if (ac < 2)
 	{
 		printf("\n");
 		return (0);
