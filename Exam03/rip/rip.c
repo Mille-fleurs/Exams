@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 15:25:12 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/02 18:29:11 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/02 21:07:01 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,15 @@ int	is_balanced(char *str, int len)
 			else
 				return (0);
 		}
+		str++;
 	}
 	if (!count)
 		return (1);
 	return (0);
 }
 
-void	get_solutions(char *str, char *res, int start, int end, int curr,
-		int needed_l, int needed_r)
+void	get_solutions(char *str, char *res, int start, int end, int needed_l,
+		int needed_r, int balanced)
 {
 	if (start == end)
 	{
@@ -66,23 +67,33 @@ void	get_solutions(char *str, char *res, int start, int end, int curr,
 	}
 	if (str[start] == '(')
 	{
-		if (needed_r > 0)
-			res[curr] = '_';
+		if (needed_l > 0)
+		{
+			res[start] = '_';
+			get_solutions(str, res, start + 1, end, needed_l - 1, needed_r,
+				balanced);
+		}
 		else
-			res[curr] = str[start];
-		if (res[curr] == '_')
-			needed_r--;
-		get_solutions(str, res, start + 1, end, curr + 1, needed_l, needed_r);
+		{
+			res[start] = str[start];
+			get_solutions(str, res, start + 1, end, needed_l, needed_r, balanced
+				+ 1);
+		}
 	}
 	else
 	{
-		if (needed_l > 0)
-			res[curr] = '_';
-		else
-			res[curr] = str[start];
-		if (res[curr] == '_')
-			needed_l--;
-		get_solutions(str, res, start + 1, end, curr + 1, needed_l, needed_r);
+		if (needed_r > 0)
+		{
+			res[start] = '_';
+			get_solutions(str, res, start + 1, end, needed_l, needed_r - 1,
+				balanced);
+		}
+		if (balanced > 0)
+		{
+			res[start] = str[start];
+			get_solutions(str, res, start + 1, end, needed_l, needed_r, balanced
+				- 1);
+		}
 	}
 }
 
@@ -91,13 +102,18 @@ void	count_needed(char *str, int *left, int *right)
 	while (*str)
 	{
 		if (*str == '(')
-			(*right)++;
-		else
 		{
-			if (right)
+			if (*right)
 				(*right)--;
 			else
 				(*left)++;
+		}
+		else
+		{
+			if (*left)
+				(*left)--;
+			else
+				(*right)++;
 		}
 		str++;
 	}
@@ -129,7 +145,7 @@ int	main(int ac, char **av)
 			return (0);
 		}
 		count_needed(av[1], &needed_l, &needed_r);
-		get_solutions(av[1], res, 0, len, 0, needed_l, needed_r);
+		get_solutions(av[1], res, 0, len, needed_l, needed_r, 0);
 		// printf("%d\n", is_balanced(av[1], len));
 		// printf("left:%d, right:%d\n", needed_l, needed_r);
 		return (0);
