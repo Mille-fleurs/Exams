@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 15:25:12 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/02 21:07:01 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/02 21:11:56 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,9 @@ void	get_solutions(char *str, char *res, int start, int end, int needed_l,
 			get_solutions(str, res, start + 1, end, needed_l - 1, needed_r,
 				balanced);
 		}
-		else
-		{
-			res[start] = str[start];
-			get_solutions(str, res, start + 1, end, needed_l, needed_r, balanced
-				+ 1);
-		}
+		res[start] = str[start];
+		get_solutions(str, res, start + 1, end, needed_l, needed_r, balanced
+			+ 1);
 	}
 	else
 	{
