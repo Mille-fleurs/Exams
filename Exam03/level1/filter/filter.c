@@ -12,26 +12,43 @@
 
 #include "filter.h"
 
-int     is_match(char *s1, char *s2)
+static int     is_match(char *hay, char *pat, size_t pat_len)
 {
-    unsigned long    i;
-    unsigned long  len;
+    size_t  i;
 
     i = 0;
-    len = strlen(s2);
-    while (i < len)
+    while (i < pat_len)
     {
-        if (s1[i] != s2[i])
+        if (hay[i] != pat[i])
             return (0);
         i++;
     }
     return (1);
 }
 
-int    print_error(int err)
+static int    print_n(const char *s, size_t n)
 {
-    printf("Error: %s\n", strerror(err));
-    return (1);
+    if (n == 0)
+        return (0);
+    if (printf("%.*s", (int)n, s) < 0)
+    {
+        perror("Error");
+        return (1);
+    }
+    return (0);
+}
+
+static int  print_stars(size_t n)
+{
+    while (n--)
+    {
+        if (printf("*") < 0)
+        {
+            perror("Error");
+            return (1);
+        }
+    }
+    return (0);
 }
 
 int     ft_filter(char *s)
@@ -49,10 +66,10 @@ int     ft_filter(char *s)
         i = 0;
         while (i < read_ret)
         {
-            if (is_match(&buff[i], s))
+            if (is_match(&buff[i], s, strlen(s)))
             {
                 j = 0;
-                while (i < (int)strlen(s))
+                while (i < strlen(s))
                     buff[i++] = '*'; 
             }
             i++;
@@ -67,20 +84,9 @@ int     ft_filter(char *s)
 
 int main(int ac, char **av)
 {
-    char *s;
-    unsigned long i;
-
     if (ac != 2)
         return (1);
-    s = malloc(sizeof(char) * (strlen(av[1] + 1)));
-    if (!s)
-        return (1);
-    i = 0;
-    while (i < strlen(av[1]))
-    {
-        s[i] = av[1][i];
-        i++;
-    }
-    ft_filter(s);
-    return (0);
+    return (filter_stream(av[1]));
 }
+
+
