@@ -38,7 +38,7 @@ static void  print_stars(size_t n)
         printf("*");
 }
 
-static void *ft_memcpy(void *dest, void *src, size_t n)
+static void ft_memcpy(void *dest, void *src, size_t n)
 {
     size_t  i;
 
@@ -48,43 +48,45 @@ static void *ft_memcpy(void *dest, void *src, size_t n)
         ((char *)dest)[i] = ((char *)src)[i];
         i++;
     }
-    return (dest);
 }
 
-static void update_carry(char **carry, char *start, size_t pat_len)
+static void update_carry(char **carry, size_t *carry_len, size_t pat_len)
 {
-    char *tmp;
-
-    tmp = malloc(pat_len);
-    if (!tmp)
+    size_t  keep;
+    size_t  i;
+   
+    if (pat_len <= 1)
     {
-        free(*carry);
-        *carry = NULL;
+        (*carry)[0] = '\0';
+        *carry_len = 0;
         return ;
     }
-    if (pat_len > 1)
-        ft_memcpy(tmp, start, pat_len - 1);
-    tmp[pat_len] = '\0';
-    free(*carry);
-    *carry = tmp;
+    keep = pat_len - 1;
+    if (*carry_len <= keep)
+        return ;
+    i = 0;
+    while (i < keep)
+    {
+        (*carry)[i] = (*carry)[*carry_len - keep + 1];
+        i++;
+    }
+    (*carry)[keep] = '\0';
+    *carry_len = keep;
 }
 
-static char *concatnate_mem(char **carry, char *buff, size_t *carry_len, size_t buff_len)
+static int  concatnate_mem(char **carry, char *buff, size_t *carry_len, size_t buff_len)
 {
     char *tmp;
 
-    *carry_len = strlen(*carry);
-    tmp = malloc(*carry_len + buff_len + 1);
+    tmp = realloc(*carry, *carry_len + buff_len + 1);
     if (!tmp)
-        return (NULL);
-    if (carry_len > 0)
-        ft_memcpy(tmp, *carry, *carry_len);
+        return (1);
+    *carry = tmp;
     if (buff_len > 0)
-        ft_memcpy(tmp + *carry_len, buff, buff_len);
-    tmp[*carry_len + buff_len] = '\0';
-    free(*carry);
-    *carry = buff;
-    return (tmp);
+        ft_memcpy(*carry + *carry_len, buff, buff_len);
+    *carry_len += buff_len;
+    (*carry)[*carry_len] = '\0';
+    return (0);
 }
 
 int     filter_stream(char *pat)
@@ -93,48 +95,73 @@ int     filter_stream(char *pat)
     size_t  pat_len;
     size_t  carry_len;
     size_t  safe_len;
+    size_t  i;
     char buff[BUFFER_SIZE];
-    char carry[BUFFER_SIZE + 1];
+    char *carry;
     char *data;
-    char *ptr;
 
     pat_len = strlen(pat);
-    carry_len = 0;
+    carry_len = malloc(1);
+    if (!carry)
+        return (perror("Error"), 1);
     while (1)
     {
         read_ret = read(0, buff, BUFFER_SIZE);
         if (read_ret < 0)
-            return (perror("Error"), 1);
+            return (free(carry), perror("Error"), 1);
         if (read_ret == 0)
             break;
         if (pat_len == 0)
             print_n(buff, (size_t)read_ret);
-        data = concatnate_mem(&carry, buff, &carry_len, (size_t)read_ret);
-        if (!data)
-            return (perror("Error"), 1);
-        ptr = data;
-        safe_len = carry_len + (size_t)read_ret + 1 - pat_len;
-        while (safe_len--)
+        if (!concatnate_mem(&carry, buff, &carry_len, (size_t)read_ret))
+            return (free(carry), perror("Error"), 1);
+        if (pat_len == 0)
         {
-            if (is_match(ptr, pat, pat_len))
-                print_stars(pat_len);
-            printf("%c", *ptr);
-            ptr++;
+            print_n(carry, carry_len);
+            carry[0] = '\0';
+            carry_len = 0;
+            continue ;
         }
-        update_carry(&carry, ptr, pat_len);
-        if (!carry[0])
-            return (perror("Error"), 1);
-        free(data);
+        if (carry_len >= pat_len)
+        {
+            safe_len = carry_len - (pat_len - 1);
+            i = 0;
+            while (i < safe_len)
+            {
+                if (i + pat_len <= safe_len && is_match(carry + i, pat, pat_len))
+                {
+                    print_stars(pat_len);
+                    i += pat_len;
+                }
+                else
+                {
+                    printf("%c", carry[i]);
+                    i++;
+                }
+                update_carry(&carry, &carry_len, pat_len);
+            }
+        }
     }
-    ptr = carry;
-    carry_len = strlen(carry);
-    while (*ptr)
+    if (pat_len == 0)
+        print_n(carry, carry_len);
+    else
     {
-        if (is_match(ptr, pat, carry_len))
-            print_stars(pat_len);
-        printf("%c", *ptr);
-        ptr++;
+        i = 0;
+        while (i < carry_len)
+        {
+            if (i + pat_len <= carry_len && is_match(carry + i, pat, pat_len))
+            {
+                print_stars(pat_len);
+                i += pat_len;
+            }
+            else
+            {
+                printf("%c", carry[i]);
+                i++;
+            }
+        }
     }
+    free(carry);
     return (0);
 }
 

@@ -113,7 +113,7 @@ char	*get_next_line(int fd)
 	ssize_t 	read_ret;
 	static char b[BUFFER_SIZE + 1];
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	line = NULL;
 	while (1)
@@ -134,7 +134,10 @@ char	*get_next_line(int fd)
 		}
 		read_ret = read(fd, b, BUFFER_SIZE);
 		if (read_ret < 0)
+		{
+			b[0] = '\0';
 			return (free(line), NULL);
+		}
 		if (read_ret == 0)
 		{
 			b[0] = '\0';
