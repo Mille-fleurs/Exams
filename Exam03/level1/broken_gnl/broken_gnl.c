@@ -6,13 +6,13 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 10:30:29 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/03 18:13:27 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/04 18:27:41 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "broken_gnl.h"
 
-char	*ft_strchr(char *s, int c)
+static char	*ft_strchr(char *s, int c)
 {
 	int	i;
 
@@ -30,7 +30,7 @@ char	*ft_strchr(char *s, int c)
     return (NULL);
 }
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+static void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
     size_t i;
 
@@ -43,7 +43,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
     return (dest);
 }
 
-size_t  ft_strlen(char *s)
+static size_t  ft_strlen(char *s)
 {
     size_t line;
 
@@ -55,7 +55,7 @@ size_t  ft_strlen(char *s)
     return (line);
 }
 
-int	append_mem(char **s1, char *s2, size_t size2)
+static int	append_mem(char **s1, char *s2, size_t size2)
 {
     size_t	size1;
 	char	*oldbuff;
