@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 15:25:12 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/02 21:42:27 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/05 13:06:20 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,30 @@ static void	print_str(char *str, int len)
 	write(1, "\n", 1);
 }
 
-static int	is_balanced(char *str, int len)
-{
-	int	count;
+// static int	is_balanced(char *str, int len)
+// {
+// 	int	count;
 
-	if (len % 2)
-		return (0);
-	count = 0;
-	while (*str)
-	{
-		if (*str == '(')
-			count++;
-		else
-		{
-			if (count)
-				count--;
-			else
-				return (0);
-		}
-		str++;
-	}
-	if (!count)
-		return (1);
-	return (0);
-}
+// 	if (len % 2)
+// 		return (0);
+// 	count = 0;
+// 	while (*str)
+// 	{
+// 		if (*str == '(')
+// 			count++;
+// 		else
+// 		{
+// 			if (count)
+// 				count--;
+// 			else
+// 				return (0);
+// 		}
+// 		str++;
+// 	}
+// 	if (!count)
+// 		return (1);
+// 	return (0);
+// }
 
 static void	get_solutions(char *str, char *res, int start, int end, int needed_l,
 		int needed_r, int balance)

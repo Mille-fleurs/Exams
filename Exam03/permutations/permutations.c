@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 22:22:44 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/02 19:47:45 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/05 11:50:02 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,24 +81,24 @@ static int	next_perm(char *s, int n)
 	return (1);
 }
 
-void	permutations_r(char *str, int start, int end)
-{
-	int	i;
+// void	permutations_r(char *str, int start, int end)
+// {
+// 	int	i;
 
-	if (start == end - 1)
-	{
-		ft_putstr(str);
-		return ;
-	}
-	i = start;
-	while (i < end)
-	{
-		ft_swap(&str[i], &str[start]);
-		permutations_r(str, start + 1, end);
-		ft_swap(&str[i], &str[start]);
-		i++;
-	}
-}
+// 	if (start == end - 1)
+// 	{
+// 		ft_putstr(str);
+// 		return ;
+// 	}
+// 	i = start;
+// 	while (i < end)
+// 	{
+// 		ft_swap(&str[i], &str[start]);
+// 		permutations_r(str, start + 1, end);
+// 		ft_swap(&str[i], &str[start]);
+// 		i++;
+// 	}
+// }
 
 int	main(int ac, char **av)
 {

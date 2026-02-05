@@ -6,13 +6,13 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 10:30:29 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/04 18:27:41 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/05 22:11:25 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "broken_gnl.h"
 
-static char	*ft_strchr(char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	int	i;
 
@@ -30,7 +30,7 @@ static char	*ft_strchr(char *s, int c)
     return (NULL);
 }
 
-static void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
     size_t i;
 
@@ -42,8 +42,8 @@ static void	*ft_memcpy(void *dest, const void *src, size_t n)
     }
     return (dest);
 }
-
-static size_t  ft_strlen(char *s)
+ 
+size_t  ft_strlen(char *s)
 {
     size_t line;
 
@@ -55,23 +55,29 @@ static size_t  ft_strlen(char *s)
     return (line);
 }
 
-static int	append_mem(char **s1, char *s2, size_t size2)
+int	str_append_mem(char **s1, char *s2, size_t size2)
 {
     size_t	size1;
-	char	*oldbuff;
+	char	*newbuff;
 
 	size1 = ft_strlen(*s1);
-	oldbuff = malloc(size1 + size2 + 1);
-	if (!oldbuff)
+	newbuff = malloc(size1 + size2 + 1);
+	if (!newbuff)
 		return (0);
 	if (size1 > 0)
-		ft_memcpy(oldbuff, *s1, size1);
+		ft_memcpy(newbuff, *s1, size1);
 	if (size2 > 0)
-		ft_memcpy(oldbuff + size1, s2, size2);
-	oldbuff[size1 + size2] = '\0';
+		ft_memcpy(newbuff + size1, s2, size2);
+	newbuff[size1 + size2] = '\0';
 	free(*s1);
-	*s1 = oldbuff;
+	*s1 = newbuff;
 	return (1);
+}
+
+int str_append_str(char **s1, char *s2)
+{
+    size_t size2 = ft_strlen(s2);
+	return str_append_mem(s1, s2, size2);
 }
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
@@ -148,4 +154,48 @@ char	*get_next_line(int fd)
 		}
 		b[read_ret] = '\0';
 	}
+}
+
+#include <fcntl.h>
+#include <stdio.h>
+
+static void	read_from_fd(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		printf("%s", line);
+		free(line);
+		line = get_next_line(fd);
+	}
+}
+
+int	main(int ac, char **av)
+{
+	int	fd;
+	int	i;
+
+	if (ac == 1)
+	{
+		read_from_fd(0);
+		return (0);
+	}
+	i = 1;
+	while (i < ac)
+	{
+		fd = open(av[i], O_RDONLY);
+		if (fd < 0)
+		{
+			printf("failed to open the file %s\n", av[i]);
+			i++;
+			continue ;
+		}
+		printf("\n-------- %s --------\n", av[i]);
+		read_from_fd(fd);
+		close(fd);
+		i++;
+	}
+	return (0);
 }
