@@ -13,7 +13,7 @@
 #ifndef FILTER_H
 #define FILTER_H
 
-#ifndef BUFFFER_SIZE
+#ifndef BUFFER_SIZE
 #define BUFFER_SIZE 4096
 #endif
 
@@ -21,8 +21,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <stddef.h>
-#include <errno.h>
 
 #endif
 

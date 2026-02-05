@@ -56,11 +56,36 @@ void	sort_str(char *str, int len)
 	}
 }
 
+static int	next_perm(char *s, int n)
+{
+	int i;
+	int	j;
+
+	i = n - 2;
+	while (i >= 0 && s[i] >= s[i + 1])
+		i--;
+	if (i < 0)
+		return (0);
+	j = n - 1;
+	while (s[j] <= s[i])
+		j--;
+	ft_swap(&s[i], &s[j]);
+	i++;
+	j = n - 1;
+	while (i < j)
+	{
+		ft_swap(&s[i], &s[j]);
+		i++;
+		j--;
+	}
+	return (1);
+}
+
 void	permutations_r(char *str, int start, int end)
 {
 	int	i;
 
-	if (start == end)
+	if (start == end - 1)
 	{
 		ft_putstr(str);
 		return ;
@@ -81,7 +106,7 @@ int	main(int ac, char **av)
 	int		len;
 	char	*dup;
 
-	if (ac == 1 | ac > 2)
+	if (ac != 2)
 		return (1);
 	len = ft_strlen(av[1]);
 	dup = malloc(len + 1);
@@ -95,7 +120,10 @@ int	main(int ac, char **av)
 	}
 	dup[i] = '\0';
 	sort_str(dup, len);
-	permutations_r(dup, 0, len);
+	ft_putstr(dup);
+	while (next_perm(dup, len))
+		ft_putstr(dup);
+	// permutations_r(dup, 0, len);
 	free(dup);
 	return (0);
 }

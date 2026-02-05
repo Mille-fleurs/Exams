@@ -12,7 +12,7 @@
 
 #include "rip.h"
 
-int	ft_strlen(char *str)
+static int	ft_strlen(char *str)
 {
 	int	len;
 
@@ -22,7 +22,7 @@ int	ft_strlen(char *str)
 	return (len);
 }
 
-void	print_str(char *str, int len)
+static void	print_str(char *str, int len)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ void	print_str(char *str, int len)
 	write(1, "\n", 1);
 }
 
-int	is_balanced(char *str, int len)
+static int	is_balanced(char *str, int len)
 {
 	int	count;
 
@@ -57,12 +57,12 @@ int	is_balanced(char *str, int len)
 	return (0);
 }
 
-void	get_solutions(char *str, char *res, int start, int end, int needed_l,
-		int needed_r, int balanced)
+static void	get_solutions(char *str, char *res, int start, int end, int needed_l,
+		int needed_r, int balance)
 {
 	if (start == end)
 	{
-		if (!needed_l && !needed_r && !balanced)
+		if (!needed_l && !needed_r && !balance)
 			print_str(res, end);
 		return ;
 	}
@@ -70,51 +70,52 @@ void	get_solutions(char *str, char *res, int start, int end, int needed_l,
 	{
 		if (needed_l > 0)
 		{
-			res[start] = '_';
+			res[start] = ' ';
 			get_solutions(str, res, start + 1, end, needed_l - 1, needed_r,
-				balanced);
+				balance);
 		}
-		res[start] = str[start];
-		get_solutions(str, res, start + 1, end, needed_l, needed_r, balanced
+		res[start] = '(';
+		get_solutions(str, res, start + 1, end, needed_l, needed_r, balance
 			+ 1);
 	}
 	else
 	{
 		if (needed_r > 0)
 		{
-			res[start] = '_';
+			res[start] = ' ';
 			get_solutions(str, res, start + 1, end, needed_l, needed_r - 1,
-				balanced);
+				balance);
 		}
-		if (balanced > 0)
+		if (balance > 0)
 		{
-			res[start] = str[start];
-			get_solutions(str, res, start + 1, end, needed_l, needed_r, balanced
+			res[start] = ')';
+			get_solutions(str, res, start + 1, end, needed_l, needed_r, balance
 				- 1);
 		}
 	}
 }
 
-void	count_needed(char *str, int *left, int *right)
+static void	count_needed(char *str, int *needed_l, int *needed_r)
 {
+	int open;
+
+	open = 0;
+	*needed_l = 0;
+	*needed_r = 0;
 	while (*str)
 	{
 		if (*str == '(')
-		{
-			if (*right)
-				(*right)--;
-			else
-				(*left)++;
-		}
+			open++;
 		else
 		{
-			if (*left)
-				(*left)--;
+			if (open > 0)
+				open--;
 			else
-				(*right)++;
+				(*needed_r)++;
 		}
 		str++;
 	}
+	*needed_l = open;
 }
 
 int	main(int ac, char **av)
@@ -124,25 +125,17 @@ int	main(int ac, char **av)
 	int needed_r;
 	char buff[MAX_LEN];
 
-	needed_l = 0;
-	needed_r = 0;
-	if (ac > 1)
+	if (ac != 2)
+		return (0);
+	len = ft_strlen(av[1]);
+	if (len <= 0)
 	{
-		len = ft_strlen(av[1]);
-		if (len == 1)
-		{
-			write(1, &av[1][0], 1);
-			return (0);
-		}
-		if (is_balanced(av[1], len))
-		{
-			print_str(av[1], len);
-			return (0);
-		}
-		count_needed(av[1], &needed_l, &needed_r);
-		get_solutions(av[1], buff, 0, len, needed_l, needed_r, 0);
-		// printf("%d\n", is_balanced(av[1], len));
-		// printf("left:%d, right:%d\n", needed_l, needed_r);
+		write(1, "\n", 1);
 		return (0);
 	}
+	if (len > MAX_LEN)
+		return (0);
+	count_needed(av[1], &needed_l, &needed_r);
+	get_solutions(av[1], buff, 0, len, needed_l, needed_r, 0);
+	return (0);
 }

@@ -12,23 +12,31 @@
 
 #include "n_queens.h"
 
-int	ft_abs(int num)
+static int	ft_abs(int num)
 {
 	if (num < 0)
-		num *= -1;
+		return (-num);
 	return (num);
 }
 
-void	print_set(int *tab, int n)
+static void	putnbr_fd(int n, int fd)
+{
+	char	c;
+
+	if (n >= 10)
+		putnbr_fd(n / 10, fd);
+	c = n % 10 + '0';
+	write(fd, &c, 1);
+}
+
+static void	print_set(int *tab, int n)
 {
 	int		i;
-	char	c;
 
 	i = 0;
 	while (i < n)
 	{
-		c = tab[i] + 48;
-		write(1, &c, 1);
+		putnbr_fd(tab[i], 1);
 		if (i < n - 1)
 			write(1, " ", 1);
 		i++;
@@ -36,7 +44,7 @@ void	print_set(int *tab, int n)
 	write(1, "\n", 1);
 }
 
-int	is_valid_row(int *tab, int row, int col)
+static int	is_valid_row(int *tab, int row, int col)
 {
 	int	i;
 
@@ -52,8 +60,10 @@ int	is_valid_row(int *tab, int row, int col)
 	return (1);
 }
 
-void	solve_puzzle(int *tab, int row, int col, int n)
+static void	solve_puzzle(int *tab, int col, int n)
 {
+	int		row;
+
 	if (col == n)
 	{
 		print_set(tab, n);
@@ -65,7 +75,7 @@ void	solve_puzzle(int *tab, int row, int col, int n)
 		if (is_valid_row(tab, row, col))
 		{
 			tab[col] = row;
-			solve_puzzle(tab, row, col + 1, n);
+			solve_puzzle(tab, col + 1, n);
 		}
 		row++;
 	}
@@ -76,15 +86,15 @@ int	main(int ac, char **av)
 	int	n;
 	int	*tab;
 
-	if (ac == 2)
-	{
-		n = atoi(av[1]);
-		if (n < 0)
-			return (1);
-		tab = malloc(sizeof(int) * n);
-		if (!tab)
-			return (1);
-		solve_puzzle(tab, 0, 0, n);
-	}
+	if (ac != 2)
+		return (0);
+	n = atoi(av[1]);
+	if (n <= 0)
+		return (0);
+	tab = malloc(sizeof(int) * n);
+	if (!tab)
+		return (1);
+	solve_puzzle(tab, 0, n);
+	free(tab);
 	return (0);
 }

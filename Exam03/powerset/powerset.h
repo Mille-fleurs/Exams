@@ -16,9 +16,4 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-int		check_duplicate(int *str, int len);
-void	print_subset(int *tab, int len);
-void	find_subset(int target, int *tab, int *res, int sum, int start, int end,
-			int curr);
-
 #endif

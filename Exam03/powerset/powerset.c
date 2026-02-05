@@ -12,7 +12,7 @@
 
 #include "powerset.h"
 
-int	check_duplicate(int *str, int len)
+static int	check_duplicate(int *str, int len)
 {
 	int	i;
 	int	j;
@@ -49,17 +49,20 @@ void	print_subset(int *tab, int len)
 }
 
 void	find_subset(int target, int *tab, int *res, int sum, int start, int end,
-		int curr)
+		int curr, int *printed)
 {
 	if (start == end)
 	{
 		if (sum == target)
+		{
 			print_subset(res, curr);
+			*printed = 1;
+		}
 		return ;
 	}
-	find_subset(target, tab, res, sum, start + 1, end, curr);
+	find_subset(target, tab, res, sum, start + 1, end, curr, printed);
 	res[curr] = tab[start];
-	find_subset(target, tab, res, sum + tab[start], start + 1, end, curr + 1);
+	find_subset(target, tab, res, sum + tab[start], start + 1, end, curr + 1, printed);
 }
 
 int	main(int ac, char **av)
@@ -70,6 +73,7 @@ int	main(int ac, char **av)
 	int *tab;
 	int *res;
 	int len;
+	int	printed;
 
 	if (ac < 2)
 	{
@@ -90,11 +94,20 @@ int	main(int ac, char **av)
 		j++;
 	}
 	if (!check_duplicate(tab, len))
+	{
+		free(tab);
 		return (1);
+	}
 	res = malloc(sizeof(int) * len);
 	if (!res)
+	{
+		free(tab);
 		return (1);
-	find_subset(n, tab, res, 0, 0, len, 0);
+	}
+	printed = 0;
+	find_subset(n, tab, res, 0, 0, len, 0, &printed);
+	if (!printed)
+		printf("\n");
 	free(tab);
 	free(res);
 	return (0);
