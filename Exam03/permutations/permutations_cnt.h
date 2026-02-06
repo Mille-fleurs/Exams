@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   permutations_cnt.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/05 21:18:30 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/06 18:26:35 by chitoupa         ###   ########.fr       */
+/*   Created: 2026/02/06 13:51:02 by chitoupa          #+#    #+#             */
+/*   Updated: 2026/02/06 18:26:28 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
+#ifndef PERMUTATIONS_CNT_H
+# define PERMUTATIONS_CNT_H
 
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include <fcntl.h>
 
-char    *get_next_line(int fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 10:30:29 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/05 22:11:25 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/06 20:22:38 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
  
 size_t  ft_strlen(char *s)
 {
-    size_t line;
+    size_t len;
 
 	if (!s)
 		return (0);
-    line = 0;
-    while(s[line])
-        line++;
-    return (line);
+    len = 0;
+    while(s[len])
+        len++;
+    return (len);
 }
 
 int	str_append_mem(char **s1, char *s2, size_t size2)
@@ -112,49 +112,78 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-char	*get_next_line(int fd)
+char *get_next_line(int fd)
 {
-	char	*line;
-	char	*nl;
-	ssize_t 	read_ret;
 	static char b[BUFFER_SIZE + 1];
+	char *line = NULL;
+	char *nl = ft_strchr(b, '\n');
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		return (NULL);
-	line = NULL;
-	while (1)
+	while (!nl)
 	{
-		nl = ft_strchr(b, '\n');
-		if (nl)
-		{
-			if (!append_mem(&line, b, (size_t)(nl - b + 1)))
-				return (free(line), NULL);
-			ft_memmove(b, nl + 1, ft_strlen(nl +1) + 1);
-			return (line);
-		}
-		if (b[0] != '\0')
-		{
-			if (!append_mem(&line, b, ft_strlen(b)))
-				return (free(line), NULL);
-			b[0] = '\0';
-		}
-		read_ret = read(fd, b, BUFFER_SIZE);
-		if (read_ret < 0)
-		{
-			b[0] = '\0';
+		if (!str_append_str(&line, b))
 			return (free(line), NULL);
-		}
+		int read_ret = read(fd, b, BUFFER_SIZE);
+		if (read_ret == -1)
+			return (free(line), NULL);
+		b[read_ret] = '\0';
 		if (read_ret == 0)
 		{
-			b[0] = '\0';
 			if (line && *line)
 				return (line);
 			free(line);
 			return (NULL);
 		}
-		b[read_ret] = '\0';
+		nl = ft_strchr(b, '\n');
 	}
+	if (!str_append_mem(&line, b, nl - b + 1))
+		return (free(line), NULL);
+	ft_memcpy(b, nl + 1, ft_strlen(nl + 1) + 1);
+	return (line);
 }
+
+// char	*get_next_line(int fd)
+// {
+// 	char	*line;
+// 	char	*nl;
+// 	ssize_t 	read_ret;
+// 	static char b[BUFFER_SIZE + 1];
+
+// 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+// 		return (NULL);
+// 	line = NULL;
+// 	while (1)
+// 	{
+// 		nl = ft_strchr(b, '\n');
+// 		if (nl)
+// 		{
+// 			if (!append_mem(&line, b, (size_t)(nl - b + 1)))
+// 				return (free(line), NULL);
+// 			ft_memmove(b, nl + 1, ft_strlen(nl +1) + 1);
+// 			return (line);
+// 		}
+// 		if (b[0] != '\0')
+// 		{
+// 			if (!append_mem(&line, b, ft_strlen(b)))
+// 				return (free(line), NULL);
+// 			b[0] = '\0';
+// 		}
+// 		read_ret = read(fd, b, BUFFER_SIZE);
+// 		if (read_ret < 0)
+// 		{
+// 			b[0] = '\0';
+// 			return (free(line), NULL);
+// 		}
+// 		if (read_ret == 0)
+// 		{
+// 			b[0] = '\0';
+// 			if (line && *line)
+// 				return (line);
+// 			free(line);
+// 			return (NULL);
+// 		}
+// 		b[read_ret] = '\0';
+// 	}
+// }
 
 #include <fcntl.h>
 #include <stdio.h>

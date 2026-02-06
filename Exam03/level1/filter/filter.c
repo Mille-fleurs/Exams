@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:45:20 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/03 19:15:40 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/06 21:32:36 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	update_carry(char **carry, size_t *carry_len, size_t pat_len)
 	*carry_len = keep;
 }
 
-static int	concatnate_mem(char **carry, char *buff,
+static int	concatenate_mem(char **carry, char *buff,
 							size_t *carry_len, size_t buff_len)
 {
 	char	*tmp;
@@ -90,7 +90,7 @@ static int	concatnate_mem(char **carry, char *buff,
 	return (1);
 }
 
-int	filter_stream(char *pat)
+static int	filter_stream(char *pat)
 {
 	ssize_t	read_ret;
 	size_t	pat_len;
@@ -113,7 +113,7 @@ int	filter_stream(char *pat)
 			return (free(carry), perror("Error"), 1);
 		if (read_ret == 0)
 			break ;
-		if (!concatnate_mem(&carry, buff, &carry_len, (size_t)read_ret))
+		if (!concatenate_mem(&carry, buff, &carry_len, (size_t)read_ret))
 			return (free(carry), perror("Error"), 1);
 		if (pat_len == 0)
 		{

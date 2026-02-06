@@ -1,4 +1,4 @@
-Assignment name : broken_GNL
+ftAssignment name : broken_GNL
 Expected files  : get_next_line.c get_next_line.h
 Allowed functions : read, free, malloc
 --------------------------------------------------------------------------------
