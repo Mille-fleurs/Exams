@@ -6,48 +6,48 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 22:40:55 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/05 23:49:28 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/07 20:51:51 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 4096
+# define BUFFER_SIZE 1024
 #endif
 
-int is_match(char *hey, char *pat, size_t n)
+int     is_match(char *hay, char *pat, size_t pat_len)
 {
     size_t  i;
 
     i = 0;
-    while (i < n)
+    while (i < pat_len)
     {
-        if (hey[i] != pat[i])
+        if (hay[i] != pat[i])
             return (0);
         i++;
     }
     return (1);
 }
 
-void    print_n(char *str, size_t n)
+void    print_n(char *s, size_t n)
 {
     if (n > 0)
-        printf("%.*s", (int)n, str);
+        printf("%.*s", (int)n, s);
 }
 
 void    print_stars(size_t n)
 {
     while (n--)
-        print("*");
+        printf("*");
 }
 
 void    *ft_memcpy(void *dest, void *src, size_t n)
 {
-    size_t i;
+    size_t  i;
 
     i = 0;
     while (i < n)
@@ -63,10 +63,10 @@ void    update_carry(char **carry, size_t *carry_len, size_t pat_len)
     size_t  keep;
     size_t  i;
 
-    if (pat_len <= 0)
+    if (pat_len <= 1)
     {
-        (*carry)[0] = '\0';
         *carry_len = 0;
+        (*carry)[0] = '\0';
         return ;
     }
     keep = pat_len - 1;
@@ -82,13 +82,14 @@ void    update_carry(char **carry, size_t *carry_len, size_t pat_len)
     *carry_len = keep;
 }
 
-int concatenate_mem(char **carry, char *buff, size_t *carry_len, size_t buff_len)
+int     concatenate_mem(char **carry, size_t *carry_len, char *buff, size_t buff_len)
 {
     char    *tmp;
 
     tmp = realloc(*carry, *carry_len + buff_len + 1);
     if (!tmp)
         return (0);
+    *carry = tmp;
     if (buff_len > 0)
         ft_memcpy(*carry + *carry_len, buff, buff_len);
     *carry_len += buff_len;
@@ -96,30 +97,31 @@ int concatenate_mem(char **carry, char *buff, size_t *carry_len, size_t buff_len
     return (1);
 }
 
-int    filter_stream(char *pat)
+int     filter_stream(char *pat)
 {
-    ssize_t read_ret;
-    size_t pat_len;
-    size_t carry_len;
-    size_t safe_len;
+    int     read_ret;
+    size_t  pat_len;
+    size_t  carry_len;
+    size_t  safe_len;
     size_t  i;
-    char *carry;
-    char b[BUFFER_SIZE];
+    char    *carry;
+    char    b[BUFFER_SIZE];
 
+    pat_len = strlen(pat);
     carry = malloc(1);
     if (!carry)
         return (perror("Error"), 1);
     carry_len = 0;
-    pat_len = strlen(pat);
+    carry[0] = '\0';
     while (1)
     {
         read_ret = read(0, b, BUFFER_SIZE);
-        if (read_ret < 0)
-            return (free(carry), perror("Error"), NULL);
+        if (read_ret == -1)
+            return (perror("Error"), free(carry), 1);
         if (read_ret == 0)
             break;
-        if (!concatenate_mem(&carry, b, &carry_len, strlen(b)))
-            return (free(carry), perror("Error"), NULL);
+        if (!concatenate_mem(&carry, &carry_len, b, (size_t)read_ret))
+            return (perror("Error"), free(carry), 1);
         if (pat_len == 0)
         {
             print_n(carry, carry_len);
@@ -129,11 +131,11 @@ int    filter_stream(char *pat)
         }
         if (carry_len >= pat_len)
         {
-            safe_len = carry_len - pat_len + 1;
+            safe_len = carry_len - (pat_len - 1);
             i = 0;
             while (i < safe_len)
             {
-                if (i + pat_len <= safe_len && is_match(carry + i, pat, pat_len))
+                if (i + pat_len <= safe_len && is_match(carry + i, pat, pat_len))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
                 {
                     print_stars(pat_len);
                     i += pat_len;
@@ -167,6 +169,6 @@ int    filter_stream(char *pat)
 int     main(int ac, char **av)
 {
     if (ac != 2)
-        return (0);
+        return (1);
     return (filter_stream(av[1]));
 }

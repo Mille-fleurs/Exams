@@ -2,7 +2,7 @@
 
 # Test files
 expected_files="get_next_line.c get_next_line.h"
-# rendu_dir="../../../../rendu/broken_gnl"
+# rendu_dir="."
 
 # Check if required files exist
 for file in $expected_files; do

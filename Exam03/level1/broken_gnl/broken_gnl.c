@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 10:30:29 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/06 20:22:38 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/07 22:00:47 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,50 +140,6 @@ char *get_next_line(int fd)
 	ft_memcpy(b, nl + 1, ft_strlen(nl + 1) + 1);
 	return (line);
 }
-
-// char	*get_next_line(int fd)
-// {
-// 	char	*line;
-// 	char	*nl;
-// 	ssize_t 	read_ret;
-// 	static char b[BUFFER_SIZE + 1];
-
-// 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-// 		return (NULL);
-// 	line = NULL;
-// 	while (1)
-// 	{
-// 		nl = ft_strchr(b, '\n');
-// 		if (nl)
-// 		{
-// 			if (!append_mem(&line, b, (size_t)(nl - b + 1)))
-// 				return (free(line), NULL);
-// 			ft_memmove(b, nl + 1, ft_strlen(nl +1) + 1);
-// 			return (line);
-// 		}
-// 		if (b[0] != '\0')
-// 		{
-// 			if (!append_mem(&line, b, ft_strlen(b)))
-// 				return (free(line), NULL);
-// 			b[0] = '\0';
-// 		}
-// 		read_ret = read(fd, b, BUFFER_SIZE);
-// 		if (read_ret < 0)
-// 		{
-// 			b[0] = '\0';
-// 			return (free(line), NULL);
-// 		}
-// 		if (read_ret == 0)
-// 		{
-// 			b[0] = '\0';
-// 			if (line && *line)
-// 				return (line);
-// 			free(line);
-// 			return (NULL);
-// 		}
-// 		b[read_ret] = '\0';
-// 	}
-// }
 
 #include <fcntl.h>
 #include <stdio.h>

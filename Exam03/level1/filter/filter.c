@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 11:45:20 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/06 21:32:36 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/07 20:34:17 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int	concatenate_mem(char **carry, char *buff,
 	(*carry)[*carry_len] = '\0';
 	return (1);
 }
-
+  
 static int	filter_stream(char *pat)
 {
 	ssize_t	read_ret;
