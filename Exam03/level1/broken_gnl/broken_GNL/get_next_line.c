@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 20:48:45 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/06 21:32:21 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/07 22:24:40 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char *get_next_line(int fd)
     ft_memcpy(b, tmp + 1, ft_strlen(tmp + 1) + 1); // +
     return ret;
 }
-
+/*
 int main(int argc, char **argv)
 {
     int fd;
@@ -128,4 +128,4 @@ int main(int argc, char **argv)
 
     close(fd);
     return 0;
-}
+}*/
