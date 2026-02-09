@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 15:25:12 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/05 13:06:20 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/09 09:17:03 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	main(int ac, char **av)
 	char buff[MAX_LEN];
 
 	if (ac != 2)
-		return (0);
+		return (1);
 	len = ft_strlen(av[1]);
 	if (len <= 0)
 	{

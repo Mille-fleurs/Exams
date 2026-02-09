@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 15:14:36 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/02 19:47:52 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/09 09:16:29 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,18 @@ int	main(int ac, char **av)
 	int len;
 	int	printed;
 
-	if (ac < 2)
-	{
-		printf("\n");
-		return (0);
-	}
+	if (ac < 3)
+		return (1);
 	len = ac - 2;
 	n = atoi(av[1]);
 	tab = malloc(sizeof(int) * len);
 	if (!tab)
 		return (1);
-	i = 2;
-	j = 0;
+	i = 0;
 	while (i < ac)
 	{
-		tab[j] = atoi(av[i]);
+		tab[j] = atoi(av[i + 2]);
 		i++;
-		j++;
 	}
 	if (!check_duplicate(tab, len))
 	{
@@ -106,7 +101,7 @@ int	main(int ac, char **av)
 	}
 	printed = 0;
 	find_subset(n, tab, res, 0, 0, len, 0, &printed);
-	if (!printed)
+	if (!printed && n == 0)
 		printf("\n");
 	free(tab);
 	free(res);

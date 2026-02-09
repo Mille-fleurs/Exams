@@ -43,7 +43,6 @@ size_t	ft_strlen(char *s)
 
 int	str_append_mem(char **s1, char *s2, size_t size2)
 {
-	char	*tmp;
 	size_t	size1;
 	char	*temp;
 
