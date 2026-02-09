@@ -1,7 +1,6 @@
 #!/bin/bash
-source ../../../main/colors.sh
 
-expected_file="filter_v2.c"
+expected_file="filter.c"
 rendu_dir="."
 
 # Check if required files exist
