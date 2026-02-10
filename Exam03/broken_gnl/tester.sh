@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Test files
-expected_files="get_next_line_v2.c get_next_line.h"
+expected_files="test.c get_next_line.h"
 rendu_dir="."
 
 # Check if required files exist

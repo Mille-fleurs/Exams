@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 14:16:06 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/02 19:47:48 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/09 09:41:37 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	main(int ac, char **av)
 	int	*tab;
 
 	if (ac != 2)
-		return (0);
+		return (1);
 	n = atoi(av[1]);
 	if (n <= 0)
 		return (0);

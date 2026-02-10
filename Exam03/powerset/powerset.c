@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 15:14:36 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/09 09:16:29 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/09 21:29:01 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,71 +39,68 @@ void	print_subset(int *tab, int len)
 	i = 0;
 	while (i < len)
 	{
-		if (i < len - 1)
-			printf("%d ", tab[i]);
-		else
-			printf("%d", tab[i]);
+		if (i > 0)
+			printf(" ");
+		printf("%d", tab[i]);
 		i++;
 	}
 	printf("\n");
 }
 
-void	find_subset(int target, int *tab, int *res, int sum, int start, int end,
+void	find_subset(int target, int *set, int *subset, int sum, int start, int end,
 		int curr, int *printed)
 {
 	if (start == end)
 	{
 		if (sum == target)
 		{
-			print_subset(res, curr);
+			print_subset(subset, curr);
 			*printed = 1;
 		}
 		return ;
 	}
-	find_subset(target, tab, res, sum, start + 1, end, curr, printed);
-	res[curr] = tab[start];
-	find_subset(target, tab, res, sum + tab[start], start + 1, end, curr + 1, printed);
+	find_subset(target, set, subset, sum, start + 1, end, curr, printed);
+	subset[curr] = set[start];
+	find_subset(target, set, subset, sum + set[start], start + 1, end, curr + 1, printed);
 }
 
 int	main(int ac, char **av)
 {
 	int i;
-	int j;
 	int n;
-	int *tab;
-	int *res;
+	int *set;
+	int *subset;
 	int len;
 	int	printed;
 
 	if (ac < 3)
 		return (1);
+	set = NULL;
+	subset = NULL;
 	len = ac - 2;
 	n = atoi(av[1]);
-	tab = malloc(sizeof(int) * len);
-	if (!tab)
-		return (1);
-	i = 0;
-	while (i < ac)
+	if (len > 0)
 	{
-		tab[j] = atoi(av[i + 2]);
-		i++;
-	}
-	if (!check_duplicate(tab, len))
-	{
-		free(tab);
-		return (1);
-	}
-	res = malloc(sizeof(int) * len);
-	if (!res)
-	{
-		free(tab);
-		return (1);
+		set = malloc(sizeof(int) * len);
+		if (!set)
+			return (1);
+		subset = malloc(sizeof(int) * len);
+		if (!subset)
+			return (free(set), 1);
+		i = 0;
+		while (i < len)
+		{
+			set[i] = atoi(av[i + 2]);
+			i++;
+		}
+		if (!check_duplicate(set, len))
+			return (free(subset), free(set), 1);
 	}
 	printed = 0;
-	find_subset(n, tab, res, 0, 0, len, 0, &printed);
+	find_subset(n, set, subset, 0, 0, len, 0, &printed);
 	if (!printed && n == 0)
 		printf("\n");
-	free(tab);
-	free(res);
+	free(subset);
+	free(set);
 	return (0);
 }

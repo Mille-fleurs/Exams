@@ -7,7 +7,7 @@ RED=$(tput setaf 1)
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
-SRC="permutations.c"
+SRC="test.c"
 BIN="./permutations_test"
 
 fail() {

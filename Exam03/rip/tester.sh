@@ -1,6 +1,6 @@
 #!/bin/bash
 
-expected_files="rip.c rip.h"
+expected_files="test.c rip.h"
 rendu_dir="."
 
 # Check if rendu directory exists
@@ -10,7 +10,7 @@ if [ ! -d "$rendu_dir" ]; then
 fi
 
 # Find C files in rendu directory
-c_files=$(find "$rendu_dir" -name "*.c" -type f)
+c_files=$(find "$rendu_dir" -name "test.c" -type f)
 if [ -z "$c_files" ]; then
     echo "$(tput setaf 1)$(tput bold)FAIL: No .c files found in $rendu_dir$(tput sgr 0)"
     exit 1

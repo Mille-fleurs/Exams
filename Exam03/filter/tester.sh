@@ -1,6 +1,6 @@
 #!/bin/bash
 
-expected_file="filter.c"
+expected_file="test.c"
 rendu_dir="."
 
 # Check if required files exist
@@ -18,8 +18,8 @@ if [ $? -ne 0 ]; then
 fi
 
 # Compile reference (if exists)
-if [ -f "filter.c" ]; then
-    gcc -Wall -Werror -Wextra -o filter_ref filter.c 2>/dev/null
+if [ -f "test.c" ]; then
+    gcc -Wall -Werror -Wextra -o filter_ref test.c 2>/dev/null
     has_reference=1
 else
     has_reference=0

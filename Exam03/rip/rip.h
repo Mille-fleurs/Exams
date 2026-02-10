@@ -6,7 +6,7 @@
 /*   By: chitoupa <chitoupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 15:25:15 by chitoupa          #+#    #+#             */
-/*   Updated: 2026/02/02 21:42:31 by chitoupa         ###   ########.fr       */
+/*   Updated: 2026/02/09 16:36:02 by chitoupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RIP_H
 
 # include <unistd.h>
+# include <stdio.h>
 
 # define MAX_LEN 4096
 
